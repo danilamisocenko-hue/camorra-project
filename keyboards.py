@@ -21,18 +21,13 @@ def get_wallets_nav_kb(user_id):
         builder.row(InlineKeyboardButton(text="📭 Список пуст", callback_data="to_main"))
     else:
         for w in wallets:
-            label = w['label'] if w['label'] else "Без названия"
-            builder.row(InlineKeyboardButton(
-                text=f"🏷 {label} | {w['network']}", 
-                callback_data=f"info:{w['wallet_address']}:{w['network']}"
-            ))
+            builder.row(InlineKeyboardButton(text=f"🏷 {w['label']}", callback_data=f"info:{w['wallet_address']}:{w['network']}"))
     builder.row(InlineKeyboardButton(text="🏠 Назад", callback_data="to_main"))
     return builder.as_markup()
 
 def get_wallet_manage_kb(addr, net):
     builder = InlineKeyboardBuilder()
     builder.row(InlineKeyboardButton(text="🔄 Обновить", callback_data=f"info:{addr}:{net}"))
-    builder.row(InlineKeyboardButton(text="✏️ Изменить метку", callback_data=f"edit:{addr}"))
-    builder.row(InlineKeyboardButton(text="🗑 Удалить", callback_data=f"del:{addr}"))
+    builder.row(InlineKeyboardButton(text="✏️ Метка", callback_data=f"edit:{addr}"), InlineKeyboardButton(text="🗑 Удалить", callback_data=f"del:{addr}"))
     builder.row(InlineKeyboardButton(text="⬅️ Назад", callback_data="my_wallets"))
     return builder.as_markup()
